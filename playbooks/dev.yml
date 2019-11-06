@@ -1,0 +1,15 @@
+- hosts: localhost
+  vars:
+      aws_access_key: "AKIAJQF7DRAHJW36J6HA"
+      aws_secret_key: "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"    
+      bucket: "dev-ikon-d3"
+  tasks:
+    - name: Build Project
+      command: npm run build
+      ignore_errors: yes
+    - name: Upload to S3
+      s3_sync:
+        aws_access_key: '{{aws_access_key}}'
+        aws_secret_key: '{{aws_secret_key}}'
+        bucket: '{{bucket}}'
+        file_root: "../build"
